@@ -257,7 +257,7 @@ func (f *Fixtures) GDTendermint(query string) string {
 
 // ValidateGenesis runs gaiad validate-genesis
 func (f *Fixtures) ValidateGenesis() {
-	cmd := fmt.Sprintf("%s validate-genesis --home=%s", f.GaiadBinary, f.GaiadHome)
+	cmd := fmt.Sprintf("%s validate-genesis --keyring-backend=test --home=%s", f.GaiadBinary, f.GaiadHome)
 	executeWriteCheckErr(f.T, cmd)
 }
 
@@ -266,31 +266,36 @@ func (f *Fixtures) ValidateGenesis() {
 
 // KeysDelete is gaiacli keys delete
 func (f *Fixtures) KeysDelete(name string, flags ...string) {
-	cmd := fmt.Sprintf("%s keys delete --home=%s %s", f.GaiacliBinary, f.GaiacliHome, name)
+	cmd := fmt.Sprintf("%s keys delete --keyring-backend=test --home=%s %s", f.GaiacliBinary,
+		f.GaiacliHome, name)
 	executeWrite(f.T, addFlags(cmd, append(append(flags, "-y"), "-f")))
 }
 
 // KeysAdd is gaiacli keys add
 func (f *Fixtures) KeysAdd(name string, flags ...string) {
-	cmd := fmt.Sprintf("%s keys add --home=%s %s", f.GaiacliBinary, f.GaiacliHome, name)
+	cmd := fmt.Sprintf("%s keys add --keyring-backend=test --home=%s %s", f.GaiacliBinary,
+		f.GaiacliHome, name)
 	executeWriteCheckErr(f.T, addFlags(cmd, flags))
 }
 
 // KeysAddRecover prepares gaiacli keys add --recover
 func (f *Fixtures) KeysAddRecover(name, mnemonic string, flags ...string) (exitSuccess bool, stdout, stderr string) {
-	cmd := fmt.Sprintf("%s keys add --home=%s --recover %s", f.GaiacliBinary, f.GaiacliHome, name)
+	cmd := fmt.Sprintf("%s keys add --keyring-backend=test --home=%s --recover %s",
+		f.GaiacliBinary, f.GaiacliHome, name)
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), mnemonic)
 }
 
 // KeysAddRecoverHDPath prepares gaiacli keys add --recover --account --index
 func (f *Fixtures) KeysAddRecoverHDPath(name, mnemonic string, account uint32, index uint32, flags ...string) {
-	cmd := fmt.Sprintf("%s keys add --home=%s --recover %s --account %d --index %d", f.GaiacliBinary, f.GaiacliHome, name, account, index)
+	cmd := fmt.Sprintf("%s keys add --keyring-backend=test --home=%s --recover %s --account %d" +
+		" --index %d", f.GaiacliBinary, f.GaiacliHome, name, account, index)
 	executeWriteCheckErr(f.T, addFlags(cmd, flags), mnemonic)
 }
 
 // KeysShow is gaiacli keys show
 func (f *Fixtures) KeysShow(name string, flags ...string) keys.KeyOutput {
-	cmd := fmt.Sprintf("%s keys show --home=%s %s", f.GaiacliBinary, f.GaiacliHome, name)
+	cmd := fmt.Sprintf("%s keys show --keyring-backend=test --home=%s %s", f.GaiacliBinary,
+		f.GaiacliHome, name)
 	out, _ := tests.ExecuteT(f.T, addFlags(cmd, flags), "")
 	var ko keys.KeyOutput
 	err := clientkeys.UnmarshalJSON([]byte(out), &ko)

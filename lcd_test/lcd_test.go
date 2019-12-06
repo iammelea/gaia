@@ -14,8 +14,6 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/x/mint"
-	"github.com/spf13/viper"
-
 	"github.com/stretchr/testify/require"
 
 	"github.com/cosmos/cosmos-sdk/client"
@@ -47,7 +45,8 @@ func init() {
 }
 
 func TestMain(m *testing.M) {
-	viper.Set(flags.FlagKeyringBackend, flags.KeyringBackendTest)
+	//viper.Set(flags.FlagKeyringBackend, flags.KeyringBackendTest)
+	flags.KeyringBackendFlagVar.Set("test")
 	os.Exit(m.Run())
 }
 

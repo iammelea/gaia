@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -137,10 +138,14 @@ contain valid denominations. Accounts may optionally be supplied with vesting pa
 	}
 
 	cmd.Flags().String(cli.HomeFlag, defaultNodeHome, "node's home directory")
+	cmd.Flags().Var(&flags.KeyringBackendFlagVar, flags.FlagKeyringBackend,
+		"Select keyring's backend (os|file|test)")
 	cmd.Flags().String(flagClientHome, defaultClientHome, "client's home directory")
 	cmd.Flags().String(flagVestingAmt, "", "amount of coins for vesting accounts")
 	cmd.Flags().Uint64(flagVestingStart, 0, "schedule start time (unix epoch) for vesting accounts")
 	cmd.Flags().Uint64(flagVestingEnd, 0, "schedule end time (unix epoch) for vesting accounts")
+
+	viper.BindPFlag(flags.FlagKeyringBackend, cmd.Flags().Lookup(flags.FlagKeyringBackend))
 
 	return cmd
 }
