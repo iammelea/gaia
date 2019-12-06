@@ -44,8 +44,8 @@ func init() {
 	version.Version = os.Getenv("VERSION")
 }
 
+// nolint: errcheck
 func TestMain(m *testing.M) {
-	//viper.Set(flags.FlagKeyringBackend, flags.KeyringBackendTest)
 	flags.KeyringBackendFlagVar.Set("test")
 	os.Exit(m.Run())
 }
