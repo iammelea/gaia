@@ -257,7 +257,7 @@ func (f *Fixtures) GDTendermint(query string) string {
 
 // ValidateGenesis runs gaiad validate-genesis
 func (f *Fixtures) ValidateGenesis() {
-	cmd := fmt.Sprintf("%s validate-genesis --keyring-backend=test --home=%s", f.GaiadBinary, f.GaiadHome)
+	cmd := fmt.Sprintf("%s validate-genesis --home=%s", f.GaiadBinary, f.GaiadHome)
 	executeWriteCheckErr(f.T, cmd)
 }
 
