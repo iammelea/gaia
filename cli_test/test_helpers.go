@@ -364,7 +364,7 @@ func (f *Fixtures) TxMultisign(fileName, name string, signaturesFiles []string,
 
 // TxStakingCreateValidator is gaiacli tx staking create-validator
 func (f *Fixtures) TxStakingCreateValidator(from, consPubKey string, amount sdk.Coin, flags ...string) (bool, string, string) {
-	cmd := fmt.Sprintf("%s tx staking create-validator %v --keyring-backend=test --from=%s" +
+	cmd := fmt.Sprintf("%s tx staking create-validator %v --keyring-backend=test --from=%s"+
 		" --pubkey=%s", f.GaiacliBinary, f.Flags(), from, consPubKey)
 	cmd += fmt.Sprintf(" --amount=%v --moniker=%v --commission-rate=%v", amount, from, "0.05")
 	cmd += fmt.Sprintf(" --commission-max-rate=%v --commission-max-change-rate=%v", "0.20", "0.10")
@@ -374,7 +374,8 @@ func (f *Fixtures) TxStakingCreateValidator(from, consPubKey string, amount sdk.
 
 // TxStakingUnbond is gaiacli tx staking unbond
 func (f *Fixtures) TxStakingUnbond(from, shares string, validator sdk.ValAddress, flags ...string) bool {
-	cmd := fmt.Sprintf("%s tx staking unbond %s %v --from=%s %v", f.GaiacliBinary, validator, shares, from, f.Flags())
+	cmd := fmt.Sprintf("%s tx staking unbond --keyring-backend=test %s %v --from=%s %v",
+		f.GaiacliBinary, validator, shares, from, f.Flags())
 	return executeWrite(f.T, addFlags(cmd, flags), client.DefaultKeyPass)
 }
 
@@ -383,7 +384,8 @@ func (f *Fixtures) TxStakingUnbond(from, shares string, validator sdk.ValAddress
 
 // TxGovSubmitProposal is gaiacli tx gov submit-proposal
 func (f *Fixtures) TxGovSubmitProposal(from, typ, title, description string, deposit sdk.Coin, flags ...string) (bool, string, string) {
-	cmd := fmt.Sprintf("%s tx gov submit-proposal %v --from=%s --type=%s", f.GaiacliBinary, f.Flags(), from, typ)
+	cmd := fmt.Sprintf("%s tx gov submit-proposal %v --keyring-backend=test --from=%s --type=%s",
+		f.GaiacliBinary, f.Flags(), from, typ)
 	cmd += fmt.Sprintf(" --title=%s --description=%s --deposit=%s", title, description, deposit)
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), client.DefaultKeyPass)
 }
