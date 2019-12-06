@@ -392,13 +392,15 @@ func (f *Fixtures) TxGovSubmitProposal(from, typ, title, description string, dep
 
 // TxGovDeposit is gaiacli tx gov deposit
 func (f *Fixtures) TxGovDeposit(proposalID int, from string, amount sdk.Coin, flags ...string) (bool, string, string) {
-	cmd := fmt.Sprintf("%s tx gov deposit %d %s --from=%s %v", f.GaiacliBinary, proposalID, amount, from, f.Flags())
+	cmd := fmt.Sprintf("%s tx gov deposit %d %s --keyring-backend=test --from=%s %v",
+		f.GaiacliBinary, proposalID, amount, from, f.Flags())
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), client.DefaultKeyPass)
 }
 
 // TxGovVote is gaiacli tx gov vote
 func (f *Fixtures) TxGovVote(proposalID int, option gov.VoteOption, from string, flags ...string) (bool, string, string) {
-	cmd := fmt.Sprintf("%s tx gov vote %d %s --from=%s %v", f.GaiacliBinary, proposalID, option, from, f.Flags())
+	cmd := fmt.Sprintf("%s tx gov vote %d %s --keyring-backend=test --from=%s %v",
+		f.GaiacliBinary, proposalID, option, from, f.Flags())
 	return executeWriteRetStdStreams(f.T, addFlags(cmd, flags), client.DefaultKeyPass)
 }
 
@@ -409,7 +411,7 @@ func (f *Fixtures) TxGovSubmitParamChangeProposal(
 ) (bool, string, string) {
 
 	cmd := fmt.Sprintf(
-		"%s tx gov submit-proposal param-change %s --from=%s %v",
+		"%s tx gov submit-proposal param-change %s --keyring-backend=test --from=%s %v",
 		f.GaiacliBinary, proposalPath, from, f.Flags(),
 	)
 
@@ -423,7 +425,7 @@ func (f *Fixtures) TxGovSubmitCommunityPoolSpendProposal(
 ) (bool, string, string) {
 
 	cmd := fmt.Sprintf(
-		"%s tx gov submit-proposal community-pool-spend %s --from=%s %v",
+		"%s tx gov submit-proposal community-pool-spend %s --keyring-backend=test --from=%s %v",
 		f.GaiacliBinary, proposalPath, from, f.Flags(),
 	)
 
