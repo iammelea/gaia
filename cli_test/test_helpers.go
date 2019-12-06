@@ -287,7 +287,7 @@ func (f *Fixtures) KeysAddRecover(name, mnemonic string, flags ...string) (exitS
 
 // KeysAddRecoverHDPath prepares gaiacli keys add --recover --account --index
 func (f *Fixtures) KeysAddRecoverHDPath(name, mnemonic string, account uint32, index uint32, flags ...string) {
-	cmd := fmt.Sprintf("%s keys add --keyring-backend=test --home=%s --recover %s --account %d" +
+	cmd := fmt.Sprintf("%s keys add --keyring-backend=test --home=%s --recover %s --account %d"+
 		" --index %d", f.GaiacliBinary, f.GaiacliHome, name, account, index)
 	executeWriteCheckErr(f.T, addFlags(cmd, flags), mnemonic)
 }
