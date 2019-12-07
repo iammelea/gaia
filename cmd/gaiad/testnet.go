@@ -10,8 +10,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/cosmos/cosmos-sdk/client/flags"
-
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	tmconfig "github.com/tendermint/tendermint/config"
@@ -93,9 +91,8 @@ Example:
 	cmd.Flags().String(
 		server.FlagMinGasPrices, fmt.Sprintf("0.000006%s", sdk.DefaultBondDenom),
 		"Minimum gas prices to accept for transactions; All fees in a tx must meet this minimum (e.g. 0.01photino,0.001stake)")
-	cmd.Flags().Var(
-		&flags.KeyringBackendFlagVar, client.FlagKeyringBackend, "Select keyring's backend (os|file|test)",
-	)
+	cmd.Flags().String(client.FlagKeyringBackend, client.DefaultKeyringBackend, "Select keyring's backend (os|file|test)")
+	viper.BindPFlag(client.FlagKeyringBackend, cmd.Flags().Lookup(client.FlagKeyringBackend))
 	return cmd
 }
 
