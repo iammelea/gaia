@@ -12,8 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cosmos/cosmos-sdk/client/flags"
-	"github.com/cosmos/cosmos-sdk/x/mint"
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/require"
 
 	"github.com/cosmos/cosmos-sdk/client"
@@ -29,6 +28,7 @@ import (
 	distrrest "github.com/cosmos/cosmos-sdk/x/distribution/client/rest"
 	disttypes "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	"github.com/cosmos/cosmos-sdk/x/gov"
+	"github.com/cosmos/cosmos-sdk/x/mint"
 	"github.com/cosmos/cosmos-sdk/x/slashing"
 )
 
@@ -46,7 +46,7 @@ func init() {
 
 // nolint: errcheck
 func TestMain(m *testing.M) {
-	flags.KeyringBackendFlagVar.Set("test")
+	viper.Set(client.FlagKeyringBackend, "test")
 	os.Exit(m.Run())
 }
 
