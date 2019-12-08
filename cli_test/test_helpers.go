@@ -221,13 +221,13 @@ func (f *Fixtures) GDInit(moniker string, flags ...string) {
 
 // AddGenesisAccount is gaiad add-genesis-account
 func (f *Fixtures) AddGenesisAccount(address sdk.AccAddress, coins sdk.Coins, flags ...string) {
-	cmd := fmt.Sprintf("%s add-genesis-account %s %s --home=%s --keyring-backend=test", f.GaiadBinary, address, coins, f.GaiadHome)
+	cmd := fmt.Sprintf("%s add-genesis-account %s %s --home=%s", f.GaiadBinary, address, coins, f.GaiadHome)
 	executeWriteCheckErr(f.T, addFlags(cmd, flags))
 }
 
 // GenTx is gaiad gentx
 func (f *Fixtures) GenTx(name string, flags ...string) {
-	cmd := fmt.Sprintf("%s gentx --name=%s --home=%s --home-client=%s --keyring-backend=test", f.GaiadBinary, name, f.GaiadHome, f.GaiacliHome)
+	cmd := fmt.Sprintf("%s gentx --name=%s --home=%s --home-client=%s", f.GaiadBinary, name, f.GaiadHome, f.GaiacliHome)
 	executeWriteCheckErr(f.T, addFlags(cmd, flags))
 }
 
